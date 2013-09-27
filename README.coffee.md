@@ -103,7 +103,7 @@ or arrays. Instances of classes, like `Number` or `String`, are *not* cloned.
             proverbs:
               quote: 'Computer science is no more about computers' +
                 'than astronomy is about telescopes.'
-              sayer: 'Dikstra'
+              sayer: 'Dijkstra'
             pools: [
               { depth: 10 }
               { depth: 20 }
