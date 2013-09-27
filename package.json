@@ -8,7 +8,7 @@
   },
   "repository": "git://github.com/Clever/underscore-deep.git",
   "scripts": {
-    "prepublish": "make"
+    "prepublish": "make",
     "test": "make test"
   },
   "license": "BSD",
