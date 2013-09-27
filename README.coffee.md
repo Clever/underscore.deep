@@ -76,7 +76,7 @@ Takes an object and produces a new object with no dot-notation keys, converting 
                 last: 'Blue'
               age: 33
 
-## _.flatten and _.deepen
+### _.flatten and _.deepen
 
 Taken as a pair, `_.flatten` and `_.deepen` have an interesting relationship:
 
@@ -92,7 +92,7 @@ They are inverses (of a sort)! We can reformulate this as a property that holds 
           assert.deepEqual flatObj, _.flatten _.deepen flatObj
           assert.deepEqual deepObj, _.deepen _.flatten deepObj
 
-## _.deepClone(obj)
+### _.deepClone(obj)
 
 Takes an object and makes a copy of it, recursively copying any nested objects
 or arrays. Instances of classes, like `Number` or `String`, are *not* cloned.
@@ -115,18 +115,18 @@ or arrays. Instances of classes, like `Number` or `String`, are *not* cloned.
           copy = _.deepClone orig
           assert.deepEqual copy, orig
           assert.notStrictEqual copy, orig
-          assert.notStrictEqual orig.deepThings.proverbs, copy.deepThings.proverbs
-          assert.notStrictEqual orig.deepThings.pools, copy.deepThings.pools
+          assert.notStrictEqual copy.deepThings.proverbs, orig.deepThings.proverbs
+          assert.notStrictEqual copy.deepThings.pools, orig.deepThings.pools
 
         it 'is equivalent to the composition of _.deepen, _.clone, and _.flatten', ->
           copy2 = _.deepen _.clone _.flatten orig
           assert.deepEqual copy2, orig
           assert.notEqual copy2, orig
 
-## _.deepHas
+### _.deepHas
 
 TODO
 
-## _.deepKeys
+### _.deepKeys
 
 TODO
