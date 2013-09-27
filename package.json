@@ -1,0 +1,23 @@
+{
+  "name": "underscore.deep",
+  "version": "0.0.1",
+  "description": "Underscore mixins for deeply nested objects",
+  "main": "underscore.deep.js",
+  "engines": {
+    "node": ">=0.10.x"
+  },
+  "repository": "git://github.com/Clever/underscore-deep.git",
+  "scripts": {
+    "prepublish": "make"
+    "test": "make test"
+  },
+  "license": "BSD",
+  "peerDependencies": {
+    "underscore": "1.x"
+  },
+  "devDependencies": {
+    "underscore": "~1.5.2",
+    "coffee-script": "~1.6.3",
+    "mocha": "~1.13.0"
+  }
+}
