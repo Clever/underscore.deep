@@ -32,22 +32,23 @@ npm install underscore.deep
 Takes an object and produces a new object with no nested objects, converting any nested objects to sets of fields with dot-notation keys, recursively.
 
     describe '_.flatten', ->
-      it 'flattens a deep object', ->
-        assert.deepEqual _.flatten({}), {}
-        assert.deepEqual _.flatten( a: 1 ), a: 1
-        assert.deepEqual _.flatten( a: { b: 2 } ), 'a.b': 2
+
+      it 'does nothing with shallow objects', ->
+        assert.deepEqual _.flatten({}),             {}
+        assert.deepEqual _.flatten( shallow: 1 ),   shallow: 1
+
+      it 'flattens nested objects', ->
+        assert.deepEqual _.flatten( deeply: { nested: 2 } ), 'deeply.nested': 2
         assert.deepEqual _.flatten(
-          a:
-            b:
-              c: 3
-              d: 4
-            e: 5
-          f: 6
-        ),
-          'a.b.c': 3
-          'a.b.d': 4
-          'a.e': 5
-          f: 6
+          user1:
+            name:
+              first: 'Deep'
+              last: 'Blue'
+            age: 33
+        ), 
+          'user1.name.first': 'Deep'
+          'user1.name.last': 'Blue'
+          'user1.age': '33'
     
 ### _.deepen(obj)
 
@@ -56,22 +57,22 @@ Takes an object and produces a new object with no dot-notation keys, converting 
 **Warning:** Any keys with a dot (`.`) in the input object will be converted to nested objects, so if you use dots in your keys you may want to replace them before you deepen.
 
     describe '_.deepen', ->
+      it 'does nothing with objects with no dot-notation', ->
+        assert.deepEqual _.deepen({}),             {}
+        assert.deepEqual _.deepen( shallow: 1 ),   shallow: 1
+
       it 'deepens a flat object', ->
-        assert.deepEqual _.deepen({}), {}
-        assert.deepEqual _.deepen( a: 1 ), a: 1
-        assert.deepEqual _.deepen( 'a.b': 2 ), a: { b: 2 }
+        assert.deepEqual _.deepen( 'deeply.nested': 2 ), deeply: { nested: 2 }
         assert.deepEqual _.deepen(
-          'a.b.c': 3
-          'a.b.d': 4
-          'a.e': 5
-          f: 6
+          'user1.name.first': 'Deep'
+          'user1.name.last': 'Blue'
+          'user1.age': '33'
         ),
-          a:
-            b:
-              c: 3
-              d: 4
-            e: 5
-          f: 6
+          user1:
+            name:
+              first: 'Deep'
+              last: 'Blue'
+            age: 33
 
 ## _.flatten and _.deepen
 
@@ -97,45 +98,23 @@ or arrays.
     describe '_.deepClone', ->
 
       orig =
-        prims:
-          num: 1
-          str: '2'
-          bool: true
-        objects:
-          Number: new Number()
-          String: new String()
-          Boolean: new Boolean()
-          Date: new Date()
-        structs:
-          array: [4, 5, 6]
-          instance: new Error("i'm an error")
+        deepThings:
+          proverbs:
+            quote: 'Computer science is no more about computers' +
+              'than astronomy is about telescopes.'
+            sayer: 'Dikstra'
+          pools: [
+            { depth: 10 }
+            { depth: 20 }
+            { depth: 30 }
+          ]
 
-      copy = _.deepClone orig
-
-      it 'clones an object', ->
+      it 'clones an object deeply', ->
+        copy = _.deepClone orig
         assert.deepEqual copy, orig
         assert.notStrictEqual copy, orig
-
-      it 'clones nested objects recursively', ->
-        _.each copy, (nested, k) ->
-          assert.deepEqual nested, orig[k]
-          assert.notStrictEqual nested, orig[k]
-
-      it "doesn't clone primitives, since you can't", ->
-        _.each copy.prims, (v, k) ->
-          assert.strictEqual v, orig.prims[k]
-
-      it 'clones primitive objects', ->
-        _.each copy.objects, (v, k) ->
-          assert.deepEqual v, orig.objects[k]
-          assert.notStrictEqual v, orig.objects[k]
-
-      it 'clones arrays recursively', ->
-        assert.deepEqual copy.structs.array, orig.structs.array
-        assert.notStrictEqual copy.structs.array, orig.structs.array
-
-      it "doesn't clone class intances", ->
-        assert.strictEqual copy.structs.instance, orig.structs.instance
+        assert.notStrictEqual orig.deepThings.proverbs, copy.deepThings.proverbs
+        assert.notStrictEqual orig.deepThings.pools, copy.deepThings.pools
 
       it 'is equivalent to the composition of _.deepen, _.clone, and _.flatten', ->
         copy2 = _.deepen _.clone _.flatten orig
