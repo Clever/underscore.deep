@@ -1,6 +1,6 @@
 {
   "name": "underscore.deep",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Underscore mixins for deeply nested objects",
   "main": "underscore.deep.js",
   "engines": {
