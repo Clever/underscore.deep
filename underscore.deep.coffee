@@ -74,7 +74,7 @@ module.exports =
 
   isPlainObject: isPlainObject = (value) -> value.constructor is {}.constructor
 
-  flatten: (obj) ->
+  deepToFlat: (obj) ->
     res = {}
     recurse = (obj, current) ->
       for key of obj
@@ -88,7 +88,7 @@ module.exports =
     res
 
   # Takes an object with keys with dot.notation and deepens it into dot{notation:{}}
-  deepen: (o) ->
+  deepFromFlat: (o) ->
     oo = {}
     t = undefined
     parts = undefined

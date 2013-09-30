@@ -2,7 +2,7 @@ assert = require 'assert'
 _ = require('underscore')
 _.mixin require('../underscore.deep.js')
 
-describe '_.deepen', ->
+describe '_.deepFromFlat', ->
 
   tests = [
     input:
@@ -19,4 +19,4 @@ describe '_.deepen', ->
   ]
   _(tests).each (test) ->
     it "deepens #{JSON.stringify test.input}", ->
-      assert.deepEqual _.deepen(test.input), test.output
+      assert.deepEqual _.deepFromFlat(test.input), test.output
