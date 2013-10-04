@@ -37,7 +37,7 @@ module.exports =
     return object unless object.constructor is {}.constructor
 
     # it is an object literal
-    mapValues object, deepClone
+    _.mapValues object, deepClone
 
   # like "of" operator except can recurse on keys with dot notation
   deepHas: (obj, keys) ->
@@ -107,3 +107,10 @@ module.exports =
   # function applied to that value (and its key).
   mapValues: mapValues = (obj, f_val) ->
     _.object _.keys(obj), _.map(obj, f_val)
+
+  deepMapValues: deepMapValues = (obj, f) ->
+    if _.isPlainObject obj
+      _.mapValues obj, (v) -> deepMapValues v, f
+    else
+      f obj
+
