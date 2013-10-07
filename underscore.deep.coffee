@@ -109,7 +109,7 @@ module.exports =
     _.object _.keys(obj), _.map(obj, f_val)
 
   deepMapValues: deepMapValues = (obj, f) ->
-    if _.isPlainObject obj
+    if isPlainObject obj
       mapValues obj, (v) -> deepMapValues v, f
     else
       f obj
