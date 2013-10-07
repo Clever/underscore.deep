@@ -72,7 +72,7 @@ module.exports =
       acc
     , if mutate then obj else _.clone obj
 
-  isPlainObject: isPlainObject = (value) -> value.constructor is {}.constructor
+  isPlainObject: isPlainObject = (value) -> value?.constructor is {}.constructor
 
   deepToFlat: (obj) ->
     res = {}

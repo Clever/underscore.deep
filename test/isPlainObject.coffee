@@ -14,6 +14,8 @@ describe '_.isPlainObject', ->
     [1,         false]
     [/a/,       false]
     [new Date(),false]
+    [null,      false]
+    [undefined, false]
   ]
   _(tests).each ([input, output]) ->
     it "returns #{output} for value #{input}", ->
