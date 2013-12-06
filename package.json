@@ -6,7 +6,7 @@
   "engines": {
     "node": ">=0.10.x"
   },
-  "repository": "git://github.com/Clever/underscore-deep.git",
+  "repository": "https://github.com/Clever/underscore.deep",
   "scripts": {
     "prepublish": "make",
     "test": "make test"
