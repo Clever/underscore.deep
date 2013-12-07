@@ -113,3 +113,20 @@ module.exports =
       mapValues obj, (v) -> deepMapValues v, f
     else
       f obj
+
+  # Takes an object with a series of rules and returns a list of values based on the rules
+  # rules can be either a list of keys or a function, and are assumed to be mutal exclusive, which means it's basically a switch statement
+  groupValues: (o, rules...) ->
+    groups = ([] for i in _.range(rules.length))
+    _.each o, (val, key) ->
+      _.every _.range(rules.length), (i) ->
+        group = groups[i]
+        rule = rules[i]
+        if _(rule).isFunction() and rule(key)
+          group.push val
+          return false
+        else if key in rule
+          group.push val
+          return false
+        return true
+    return groups
