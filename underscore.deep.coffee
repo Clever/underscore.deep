@@ -5,7 +5,7 @@ module.exports =
   deepKeys: deepKeys = (obj, prefix='') ->
     keys = []
     for key, val of obj
-      if _.isObject(val) and not _.isArray(val)
+      if _.isObject(val) and not _.isArray(val) and not _.isEmpty(val)
         keys = _.union keys, deepKeys(val, "#{prefix}#{key}.")
       else
         keys.push "#{prefix}#{key}"
