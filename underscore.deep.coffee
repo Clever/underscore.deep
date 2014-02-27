@@ -2,14 +2,16 @@ _ = require 'underscore'
 
 module.exports =
 
-  deepKeys: deepKeys = (obj, prefix='') ->
-    keys = []
-    for key, val of obj
-      if _.isObject(val) and not _.isArray(val) and not _.isEmpty(val)
-        keys = _.union keys, deepKeys(val, "#{prefix}#{key}.")
-      else
-        keys.push "#{prefix}#{key}"
-    keys
+  deepKeys: deepKeys = (obj) ->
+    throw new Error "deepKeys expected an object, got #{JSON.stringify obj}" unless isPlainObject obj
+    if _.isEmpty obj
+      []
+    else
+      _.flatten _.map obj, (v, k) ->
+        if isPlainObject(v) and not _.isEmpty(v)
+          _.map deepKeys(v), (subkey) -> "#{k}.#{subkey}"
+        else
+          [k]
 
   # http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
   # This is mostly the same as the accepted answer, just shorter.
