@@ -4,14 +4,12 @@ module.exports =
 
   deepKeys: deepKeys = (obj) ->
     throw new Error "deepKeys expected an object, got #{JSON.stringify obj}" unless isPlainObject obj
-    if _.isEmpty obj
-      []
-    else
-      _.flatten _.map obj, (v, k) ->
-        if isPlainObject(v) and not _.isEmpty(v)
-          _.map deepKeys(v), (subkey) -> "#{k}.#{subkey}"
-        else
-          [k]
+    # In the base case where obj is empty, _.map(obj, ...) will produce []
+    _.flatten _.map obj, (v, k) ->
+      if isPlainObject(v) and not _.isEmpty(v)
+        _.map deepKeys(v), (subkey) -> "#{k}.#{subkey}"
+      else
+        [k]
 
   # http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
   # This is mostly the same as the accepted answer, just shorter.
