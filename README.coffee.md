@@ -173,3 +173,6 @@ If you think of a deeply-nested object as a tree, then it will return the paths 
 
         it 'is equivalent to the composition of _.keys and _.deepToFlat', ->
           assert.deepEqual _.deepKeys(obj), _.keys(_.deepToFlat obj)
+
+        it 'does not make _.deepHas equivalent to the composition of _.contains and _.deepKeys', ->
+          assert.notDeepEqual _.contains(_.deepKeys(obj), 'node1'), _.has(obj, 'node1')
