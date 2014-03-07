@@ -4,7 +4,7 @@ Underscore.deep is a collection of Underscore mixins that operate on nested
 objects.
 
 This README is written in [Literate CoffeeScript](http://coffeescript.org/#literate) as a [Mocha](http://visionmedia.github.io/mocha/) test suite, so you can execute all of the examples - just run:
-  
+
 ```
 make README.coffee.md
 ```
@@ -26,7 +26,9 @@ _.mixin require 'underscore.deep'
 ## Functions
 
     describe 'underscore.deep', ->
-      {assert, _} = require './test/readmeHelpers'
+      assert = require 'assert'
+      _ = require 'underscore'
+      _.mixin require './underscore.deep'
 
 ### _.deepToFlat(obj)
 
@@ -46,11 +48,11 @@ Takes an object and produces a new object with no nested objects, converting any
                 first: 'Deep'
                 last: 'Blue'
               age: 33
-          ), 
+          ),
             'user1.name.first': 'Deep'
             'user1.name.last': 'Blue'
             'user1.age': '33'
-    
+
 ### _.deepFromFlat(obj)
 
 Takes an object and produces a new object with no dot-notation keys, converting any set of dot-notation keys with the same prefix to a nested object, recursively.
@@ -122,10 +124,52 @@ or arrays. Instances of classes, like `Number` or `String`, are *not* cloned.
           assert.deepEqual copy2, orig
           assert.notEqual copy2, orig
 
-### _.deepHas
+### _.deepHas(obj, key)
 
-TODO
+Takes an object `obj` and a string `key` (which should be a dot-notation key) and returns true if `obj` has a nested field named `key`.
 
-### _.deepKeys
+      describe '_.deepHas', ->
 
-TODO
+        obj = we: have: to: go: 'deeper'
+
+        it 'returns true if a regular key exists', ->
+          assert.equal _.deepHas(obj, 'we'), true
+
+        it 'returns true if the deep key exists', ->
+          assert.equal _.deepHas(obj, 'we.have'), true
+          assert.equal _.deepHas(obj, 'we.have.to'), true
+          assert.equal _.deepHas(obj, 'we.have.to.go'), true
+
+        it 'returns false if the deep key does not exist', ->
+          assert.equal _.deepHas(obj, 'we.have.to.goop'), false
+
+        it 'is not equivalent to the composition of _.has and _.deepToFlat', ->
+          assert.equal _.deepHas(obj, 'we.have.to.go'), _.has(_.deepToFlat(obj), 'we.have.to.go')
+          assert.equal _.deepHas(obj, 'we.have.to.goop'), _.has(_.deepToFlat(obj), 'we.have.to.goop')
+          assert.notEqual _.deepHas(obj, 'we'), _.has(_.deepToFlat(obj), 'we')
+
+### _.deepKeys(obj)
+
+Takes an object and returns all of its nested keys in dot-notation.
+
+If you think of a deeply-nested object as a tree, then it will return the paths to all of the tree's leaves. That means it won't return intermediate keys. As a consequence, `_.deepHas(obj, key)` is not equivalent to `_.contains _.deepKeys(obj), key`.
+
+      describe '_.deepKeys', ->
+
+        obj =
+          node1:
+            leaf1: 1
+          node2:
+            node3:
+              leaf2: 2
+              leaf3: 3
+
+        it 'returns dot-notation keys for only the leaf fields of an object', ->
+          assert.deepEqual _.deepKeys(obj), [
+            'node1.leaf1'
+            'node2.node3.leaf2'
+            'node2.node3.leaf3'
+          ]
+
+        it 'is equivalent to the composition of _.keys and _.deepToFlat', ->
+          assert.deepEqual _.deepKeys(obj), _.keys(_.deepToFlat obj)
