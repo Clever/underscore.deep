@@ -176,3 +176,93 @@ If you think of a deeply-nested object as a tree, then it will return the paths 
 
         it 'does not make _.deepHas equivalent to the composition of _.contains and _.deepKeys', ->
           assert.notDeepEqual _.contains(_.deepKeys(obj), 'node1'), _.has(obj, 'node1')
+
+### _.deepExtend(destination, source, mutate = false)
+
+Takes an object `destination` and an object `source` and creates a new object with all the deep fields of `destination` and all the deep fields of `source`. Any deep fields with the same deep key in `destination` and `source` will have the value from `source` (so `source` fields overwrite `destination` fields).
+
+Unlike `_.extend`, `_.deepExtend` is pure, so the original objects `destination` and `source` will not be modified. If you really want to mutate `destination` by adding the deep fields of `source`, pass `true` as the third parameter `mutate`.
+
+      describe '_.deepExtend', ->
+
+        destination =
+          name: 'heaven'
+          angels:
+            michael: true
+
+        it 'combines all the deep fields of destination and source', ->
+          assert.deepEqual _.deepExtend(destination, { angels: gabriel: false }),
+            name: 'heaven'
+            angels:
+              michael: true
+              gabriel: false
+
+        it 'overwrites fields of destination with fields from source', ->
+          assert.deepEqual _.deepExtend(destination, { angels: michael: false }),
+            name: 'heaven'
+            angels:
+              michael: false
+
+        it 'does not mutate the input objects', ->
+          assert.notStrictEqual destination, _.deepExtend(destination, { name: 'hell' })
+
+        it 'is equivalent to a weird composition of _.deepFromFlat, _.extend, and _.deepToFlat', ->
+          assert.deepEqual _.deepExtend(destination, { angels: gabriel: false }),
+            _.deepFromFlat _.extend _.deepToFlat(destination), _.deepToFlat({ angels: gabriel: false })
+
+### _.deepMapValues(obj, func)
+
+Like [_.mapValues](#_mapvaluesobj), but for deep objects. Constructs a new object by applying function `func` to the value for every deep field in object `obj`.
+
+      describe '_.deepMapValues', ->
+
+        obj =
+          values:
+            empathy: true
+            responsibility: false
+
+        it 'creates an object by applying func to each deep value in obj', ->
+          assert.deepEqual _.deepMapValues(obj, (v) -> not v),
+            values:
+              empathy: false
+              responsibility: true
+
+        it 'is equivalent to the composition of _.deepFromFlat, _.mapValues, and _.deepToFlat', ->
+          assert.deepEqual _.deepMapValues(obj, (v) -> String v),
+            _.deepFromFlat _.mapValues _.deepToFlat(obj), (v) -> String v
+
+## Non-deep Helpers
+
+Someday these will probably be moved into their own library, but for now they live here.
+
+### _.isPlainObject(val)
+
+Takes a value `val` and returns `true` if it's a vanilla JS object (i.e. not an instance of any built-in or custom class). Otherwise returns false.
+
+      describe '_.isPlainObject', ->
+
+        it 'returns true for vanilla objects', ->
+          assert.equal _.isPlainObject({}), true
+          assert.equal _.isPlainObject({ vanilla: 'is so plain' }), true
+
+        it 'returns false for other values', ->
+          assert.equal _.isPlainObject(1), false
+          assert.equal _.isPlainObject('chocolate'), false
+          assert.equal _.isPlainObject(new Date()), false
+
+### _.mapValues(obj, func)
+
+Takes an object `obj` and a function `func` and constructs a new object by applying `func` to every value in `obj`. `func` receives two arguments, the value and the key for that value.
+
+Some have [described](https://github.com/jashkenas/underscore/issues/220#issuecomment-12112759) this function as "the fundamental map over dictionaries." Others have [said](https://github.com/jashkenas/underscore/issues/220#issuecomment-1470150) its not "mainstream enough to deserve to make it into Underscore proper." We take no stance in the debate, but we have to admit we use it on the daily.
+
+      describe '_.mapValues', ->
+
+        obj =
+          respect: 1
+          fairness: 2
+
+        it 'creates an object by applying func to each value in obj', ->
+          assert.deepEqual _.mapValues(obj, (v) -> v * 10),
+            respect: 10
+            fairness: 20
