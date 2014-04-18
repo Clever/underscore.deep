@@ -115,3 +115,16 @@ module.exports =
       mapValues obj, (v) -> deepMapValues v, f
     else
       f obj
+
+  mapKeys: mapKeys = (obj, f_val) ->
+    unless _.isPlainObject(obj)
+      throw new Error "mapKeys must be called on an object"
+    _.object _.map(obj, (v,k) -> f_val k,v), _.values obj
+
+  deepMapKeys: deepMapKeys = (obj, f) ->
+    helper = (obj, f, old_key) ->
+      if isPlainObject obj
+        _.object _.map obj, (v, k) -> [f(k), deepMapKeys(v, f, k)]
+      else
+        return obj
+    helper obj, f

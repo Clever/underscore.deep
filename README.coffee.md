@@ -212,10 +212,9 @@ Unlike `_.extend`, `_.deepExtend` is pure, so the original objects `destination`
 
 ### _.deepMapValues(obj, func)
 
-Like [_.mapValues](#_mapvaluesobj), but for deep objects. Constructs a new object by applying function `func` to the value for every deep field in object `obj`.
+Like [_.mapValues](#_mapvaluesobj-func), but for deep objects. Constructs a new object by applying function `func` to the value for every deep field in object `obj`.
 
       describe '_.deepMapValues', ->
-
         obj =
           values:
             empathy: true
@@ -230,6 +229,21 @@ Like [_.mapValues](#_mapvaluesobj), but for deep objects. Constructs a new objec
         it 'is equivalent to the composition of _.deepFromFlat, _.mapValues, and _.deepToFlat', ->
           assert.deepEqual _.deepMapValues(obj, (v) -> String v),
             _.deepFromFlat _.mapValues _.deepToFlat(obj), (v) -> String v
+
+### _.deepMapKeys(obj, func)
+Exactly like [_.deepMapValues](#_deepmapvaluesobj-func) but for keys.
+
+      describe '_.deepMapKeys', ->
+        obj =
+          characters:
+            potato_head: 5
+            manager: 6
+
+        it 'creates an object by applying func to each deep key in obj', ->
+          assert.deepEqual _.deepMapKeys(obj, (v) -> 'mr_' + v),
+            mr_characters:
+              mr_potato_head: 5
+              mr_manager: 6
 
 ## Non-deep Helpers
 
@@ -257,7 +271,6 @@ Takes an object `obj` and a function `func` and constructs a new object by apply
 Some have [described](https://github.com/jashkenas/underscore/issues/220#issuecomment-12112759) this function as "the fundamental map over dictionaries." Others have [said](https://github.com/jashkenas/underscore/issues/220#issuecomment-1470150) its not "mainstream enough to deserve to make it into Underscore proper." We take no stance in the debate, but we have to admit we use it on the daily.
 
       describe '_.mapValues', ->
-
         obj =
           respect: 1
           fairness: 2
@@ -266,3 +279,16 @@ Some have [described](https://github.com/jashkenas/underscore/issues/220#issueco
           assert.deepEqual _.mapValues(obj, (v) -> v * 10),
             respect: 10
             fairness: 20
+
+### _.mapKeys(obj, func)
+Exactly like [_.mapValues](#_mapvaluesobj-func) but for keys
+
+      describe '_.mapKeys', ->
+        obj =
+          animate: 1
+          charge: 2
+
+        it 'creates an object by applying func to each key in obj', ->
+          assert.deepEqual _.mapKeys(obj, (v) -> 're' + v),
+            reanimate: 1
+            recharge: 2
