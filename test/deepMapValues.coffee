@@ -1,18 +1,10 @@
 assert = require 'assert'
 _ = require('underscore')
 _.mixin require('../underscore.deep.js')
+h = require './helpers'
 
 describe '_.deepMapValues', ->
-  _.each [
-    "foo"
-    String
-    5
-    null
-    []
-  ], (input) ->
-    it "throws on non object '#{input}'", ->
-      assert.throws (-> _.deepMapValues input, (v) -> v),
-        /deepMapValues must be called on an object/
+  h.it_throws_on_non_objects (input) -> _.deepMapValues input, (v) -> v
 
   it "maps over an empty object", ->
     res = _.deepMapValues {}, (val) -> assert.fail "shouldn't have called map fn"

@@ -1,8 +1,11 @@
 assert = require 'assert'
 _ = require('underscore')
 _.mixin require('../underscore.deep.js')
+h = require './helpers'
 
 describe '_.deepKeys', ->
+
+    h.it_throws_on_non_objects _.deepKeys
 
     _.each [
       [{}                                     , []]
@@ -22,12 +25,3 @@ describe '_.deepKeys', ->
     ], ([input, output]) ->
       it "extracts keys in dot notation from #{JSON.stringify input}", ->
         assert.deepEqual _.deepKeys(input), output
-
-    _.each [
-      /a/
-      new Error('not a plain object')
-      'Stringy McString-String'
-      1
-    ], (bad_input) ->
-      it "throws on non-object #{JSON.stringify bad_input}", ->
-        assert.throws -> _.deepKeys bad_input

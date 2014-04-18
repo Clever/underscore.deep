@@ -3,7 +3,7 @@ _ = require 'underscore'
 module.exports =
 
   deepKeys: deepKeys = (obj) ->
-    throw new Error "deepKeys expected an object, got #{JSON.stringify obj}" unless isPlainObject obj
+    throw new Error "deepKeys must be called on an object, not '#{obj}'" unless isPlainObject obj
     # In the base case where obj is empty, _.map(obj, ...) will produce []
     _.flatten _.map obj, (v, k) ->
       if isPlainObject(v) and not _.isEmpty(v)
@@ -106,13 +106,13 @@ module.exports =
   # Takes an object and replaces each of its values with the result of a
   # function applied to that value (and its key).
   mapValues: mapValues = (obj, f_val) ->
-    unless _.isPlainObject(obj)
-      throw new Error "mapValues must be called on an object"
+    unless _.isPlainObject obj
+      throw new Error "mapValues must be called on an object, not '#{obj}'"
     _.object _.keys(obj), _.map(obj, f_val)
 
   deepMapValues: deepMapValues = (obj, f) ->
-    unless _.isPlainObject(obj)
-      throw new Error "deepMapValues must be called on an object"
+    unless _.isPlainObject obj
+      throw new Error "deepMapValues must be called on an object, not '#{obj}'"
     mapValues obj, (v) ->
       if _.isPlainObject v
         deepMapValues v, f
@@ -120,14 +120,13 @@ module.exports =
         f v
 
   mapKeys: mapKeys = (obj, f_val) ->
-    unless _.isPlainObject(obj)
-      throw new Error "mapKeys must be called on an object"
+    unless _.isPlainObject obj
+      throw new Error "mapKeys must be called on an object, not '#{obj}'"
     _.object _.map(obj, (v,k) -> f_val k,v), _.values obj
 
   deepMapKeys: deepMapKeys = (obj, f) ->
-    console.log "OBJ", obj
-    unless _.isPlainObject(obj)
-      throw new Error "deepMapKeys must be called on an object"
+    unless _.isPlainObject obj
+      throw new Error "deepMapKeys must be called on an object, not '#{obj}'"
     helper = (obj, f, old_key) ->
       _.object _.map obj, (v, k) ->
         if _.isPlainObject v
