@@ -106,6 +106,8 @@ module.exports =
   # Takes an object and replaces each of its values with the result of a
   # function applied to that value (and its key).
   mapValues: mapValues = (obj, f_val) ->
+    unless _.isPlainObject(obj)
+      throw new Error "mapValues must be called on an object"
     _.object _.keys(obj), _.map(obj, f_val)
 
   deepMapValues: deepMapValues = (obj, f) ->

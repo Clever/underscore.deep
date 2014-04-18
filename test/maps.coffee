@@ -3,6 +3,10 @@ _ = require('underscore')
 _.mixin require('../underscore.deep.js')
 
 describe '_.mapValues', ->
+  it "throws on a non-object", ->
+    assert.throws (-> _.mapValues [], (v) -> v),
+      /mapValues must be called on an object/
+
   it "maps over an empty object", ->
     res = _.mapValues {}, (val) -> assert.fail "shouldn't have called map fn"
     assert.deepEqual res, {}
