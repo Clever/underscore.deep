@@ -2,7 +2,7 @@ assert = require 'assert'
 _ = require('underscore')
 _.mixin require('../underscore.deep.js')
 
-describe '_.mapKeys', ->
+describe '_.deepMapKeys', ->
   _.each [
     "foo"
     String
@@ -10,9 +10,9 @@ describe '_.mapKeys', ->
     null
     []
   ], (input) ->
-    it "returns the value on non object #{input}", ->
-      res = _.deepMapKeys input, (val) -> assert.fail "shouldn't have called map fn"
-      assert.deepEqual res, input
+    it "throws on non object '#{input}'", ->
+      assert.throws (-> _.deepMapKeys input, (v) -> v),
+        /deepMapKeys must be called on an object/
 
   it "maps over an empty object", ->
     res = _.deepMapKeys {}, (val) -> assert.fail "shouldn't have called map fn"
