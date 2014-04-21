@@ -9,9 +9,9 @@ module.exports =
       null
       String
       1
-      'foo'
+      'Stringy McString-String'
       true
-      /a/
+      /Regex McReg/
       new Error('not a plain obj')
       [1, 2, 3]
     ], (non_object) ->

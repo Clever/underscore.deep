@@ -281,7 +281,9 @@ Some have [described](https://github.com/jashkenas/underscore/issues/220#issueco
             fairness: 20
 
 ### _.mapKeys(obj, func)
-Exactly like [_.mapValues](#_mapvaluesobj-func) but for keys
+Exactly like [_.mapValues](#_mapvaluesobj-func) but for keys.
+
+Note that the function takes a function takes a key and optionally a value, not the usual mapping function pattern of taking a value and optionally a key
 
       describe '_.mapKeys', ->
         obj =
@@ -289,6 +291,11 @@ Exactly like [_.mapValues](#_mapvaluesobj-func) but for keys
           charge: 2
 
         it 'creates an object by applying func to each key in obj', ->
-          assert.deepEqual _.mapKeys(obj, (v) -> 're' + v),
+          assert.deepEqual _.mapKeys(obj, (key) -> 're' + key),
             reanimate: 1
             recharge: 2
+
+        it 'creates an object by applying func to each key, val in obj', ->
+          assert.deepEqual _.mapKeys(obj, (key, val) -> 're' + key + val),
+            reanimate1: 1
+            recharge2: 2

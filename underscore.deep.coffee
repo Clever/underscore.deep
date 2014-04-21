@@ -119,6 +119,8 @@ module.exports =
       else
         f v
 
+  # note that the function takes a key and optionally a value, not the usual
+  # mapping function pattern of taking a value and optionally a key
   mapKeys: mapKeys = (obj, f_val) ->
     unless _.isPlainObject obj
       throw new Error "mapKeys must be called on an object, not '#{obj}'"
