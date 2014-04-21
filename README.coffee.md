@@ -230,21 +230,6 @@ Like [_.mapValues](#_mapvaluesobj-func), but for deep objects. Constructs a new 
           assert.deepEqual _.deepMapValues(obj, (v) -> String v),
             _.deepFromFlat _.mapValues _.deepToFlat(obj), (v) -> String v
 
-### _.deepMapKeys(obj, func)
-Exactly like [_.deepMapValues](#_deepmapvaluesobj-func) but for keys.
-
-      describe '_.deepMapKeys', ->
-        obj =
-          characters:
-            potato_head: 5
-            manager: 6
-
-        it 'creates an object by applying func to each deep key in obj', ->
-          assert.deepEqual _.deepMapKeys(obj, (v) -> 'mr_' + v),
-            mr_characters:
-              mr_potato_head: 5
-              mr_manager: 6
-
 ## Non-deep Helpers
 
 Someday these will probably be moved into their own library, but for now they live here.
