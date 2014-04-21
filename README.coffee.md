@@ -212,10 +212,9 @@ Unlike `_.extend`, `_.deepExtend` is pure, so the original objects `destination`
 
 ### _.deepMapValues(obj, func)
 
-Like [_.mapValues](#_mapvaluesobj), but for deep objects. Constructs a new object by applying function `func` to the value for every deep field in object `obj`.
+Like [_.mapValues](#_mapvaluesobj-func), but for deep objects. Constructs a new object by applying function `func` to the value for every deep field in object `obj`.
 
       describe '_.deepMapValues', ->
-
         obj =
           values:
             empathy: true
@@ -257,7 +256,6 @@ Takes an object `obj` and a function `func` and constructs a new object by apply
 Some have [described](https://github.com/jashkenas/underscore/issues/220#issuecomment-12112759) this function as "the fundamental map over dictionaries." Others have [said](https://github.com/jashkenas/underscore/issues/220#issuecomment-1470150) its not "mainstream enough to deserve to make it into Underscore proper." We take no stance in the debate, but we have to admit we use it on the daily.
 
       describe '_.mapValues', ->
-
         obj =
           respect: 1
           fairness: 2
@@ -266,3 +264,23 @@ Some have [described](https://github.com/jashkenas/underscore/issues/220#issueco
           assert.deepEqual _.mapValues(obj, (v) -> v * 10),
             respect: 10
             fairness: 20
+
+### _.mapKeys(obj, func)
+Exactly like [_.mapValues](#_mapvaluesobj-func) but for keys.
+
+Note that the function takes a function takes a key and optionally a value, not the usual mapping function pattern of taking a value and optionally a key
+
+      describe '_.mapKeys', ->
+        obj =
+          animate: 1
+          charge: 2
+
+        it 'creates an object by applying func to each key in obj', ->
+          assert.deepEqual _.mapKeys(obj, (key) -> 're' + key),
+            reanimate: 1
+            recharge: 2
+
+        it 'creates an object by applying func to each key, val in obj', ->
+          assert.deepEqual _.mapKeys(obj, (key, val) -> 're' + key + val),
+            reanimate1: 1
+            recharge2: 2
