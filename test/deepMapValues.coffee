@@ -17,3 +17,9 @@ describe '_.deepMapValues', ->
   it "maps add1 over a deep object", ->
     res = _.deepMapValues { a: { b: 1, c: 2 }, d: e: f: 3 }, (val) -> val + 1
     assert.deepEqual res, { a: { b: 2, c: 3 }, d: e: f: 4 }
+
+  it "returns keys", ->
+    obj = {}
+    res = _.deepMapValues { a: { b: 1, c: 2 }, d: e: f: 3 }, (val, key) ->
+      val = if 'a' in key then 0 else val
+    assert.deepEqual res, { a: { b: 0, c: 0 }, d: e: f: 3 }

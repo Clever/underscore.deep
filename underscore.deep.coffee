@@ -113,11 +113,12 @@ module.exports =
   deepMapValues: deepMapValues = (obj, f) ->
     unless _.isPlainObject obj
       throw new Error "deepMapValues must be called on an object, not '#{obj}'"
-    mapValues obj, (v) ->
+    mapValues obj, (v, k) ->
       if _.isPlainObject v
-        deepMapValues v, f
+        deepMapValues v, (subv, subk) ->
+          f subv, "#{k}.#{subk}"
       else
-        f v
+        f v, k
 
   # note that the function takes a key and optionally a value, not the usual
   # mapping function pattern of taking a value and optionally a key
