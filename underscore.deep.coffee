@@ -50,6 +50,22 @@ module.exports =
         helper obj[_.first(keys)], _.rest(keys)
     helper obj, if _.isArray keys then keys else keys.split('.')
 
+  deepOmit: deepOmit = (obj, keys) ->
+    unless _.isPlainObject obj
+      throw new Error "deepOmit must be called on an object, not '#{obj}'"
+    deepOmitOne = (obj, key) ->
+      helper = (obj, key_arr) ->
+        switch
+          when _.isEmpty key_arr then obj
+          when key_arr.length is 1 then _.omit obj, _.first key_arr
+          when not _.isPlainObject obj[_.first key_arr] then obj
+          else
+            _.extend {}, obj, _.object [_.first key_arr], [
+              helper obj[_.first key_arr], _.rest key_arr
+            ]
+      helper obj, key.split('.')
+    _.reduce keys, deepOmitOne, obj
+
   deepDelete: deepDelete = (obj, key) ->
     return if not key? or not obj?
     key = key.split '.' if not _(key).isArray()

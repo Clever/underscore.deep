@@ -177,6 +177,26 @@ If you think of a deeply-nested object as a tree, then it will return the paths 
         it 'does not make _.deepHas equivalent to the composition of _.contains and _.deepKeys', ->
           assert.notDeepEqual _.contains(_.deepKeys(obj), 'node1'), _.has(obj, 'node1')
 
+### _.deepOmit(obj, keys)
+
+Takes an object and a list of dot-notation keys and returns a new object without those keys.
+
+      describe '_.deepOmit', ->
+
+        obj =
+          fruit:
+            apple: true
+            orange: true
+            carrot: true
+          vegetables:
+            banana: true
+
+        it 'returns an object without the given keys', ->
+          assert.deepEqual _.deepOmit(obj, ['fruit.carrot', 'vegetables']),
+            fruit:
+              apple: true
+              orange: true
+
 ### _.deepExtend(destination, source, mutate = false)
 
 Takes an object `destination` and an object `source` and creates a new object with all the deep fields of `destination` and all the deep fields of `source`. Any deep fields with the same deep key in `destination` and `source` will have the value from `source` (so `source` fields overwrite `destination` fields).
