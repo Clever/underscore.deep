@@ -50,15 +50,15 @@ module.exports =
         helper obj[_.first(keys)], _.rest(keys)
     helper obj, if _.isArray keys then keys else keys.split('.')
 
-  deepOmit: deepOmit = (obj, keys) ->
-    unless _.isPlainObject obj
+  deepOmit: (obj, keys) ->
+    unless isPlainObject obj
       throw new Error "deepOmit must be called on an object, not '#{obj}'"
     deepOmitOne = (obj, key) ->
       helper = (obj, key_arr) ->
         switch
           when _.isEmpty key_arr then obj
           when key_arr.length is 1 then _.omit obj, _.first key_arr
-          when not _.isPlainObject obj[_.first key_arr] then obj
+          when not isPlainObject obj[_.first key_arr] then obj
           else
             _.extend {}, obj, _.object [_.first key_arr], [
               helper obj[_.first key_arr], _.rest key_arr
@@ -80,7 +80,7 @@ module.exports =
   # the original object. If you must have a mutative version, pass true as the
   # third `mutate` parameter.
   deepExtend: deepExtend = (obj, ext, mutate) ->
-    _.reduce ext, (acc, val, key) =>
+    _.reduce ext, (acc, val, key) ->
       acc[key] =
         if (key of obj) and isPlainObject(obj[key]) and isPlainObject(val)
         then deepExtend obj[key], val
@@ -122,15 +122,15 @@ module.exports =
   # Takes an object and replaces each of its values with the result of a
   # function applied to that value (and its key).
   mapValues: mapValues = (obj, f_val) ->
-    unless _.isPlainObject obj
+    unless isPlainObject obj
       throw new Error "mapValues must be called on an object, not '#{obj}'"
     _.object _.keys(obj), _.map(obj, f_val)
 
   deepMapValues: deepMapValues = (obj, f) ->
-    unless _.isPlainObject obj
+    unless isPlainObject obj
       throw new Error "deepMapValues must be called on an object, not '#{obj}'"
     mapValues obj, (v, k) ->
-      if _.isPlainObject v
+      if isPlainObject v
         deepMapValues v, (subv, subk) ->
           f subv, "#{k}.#{subk}"
       else
@@ -139,6 +139,6 @@ module.exports =
   # note that the function takes a key and optionally a value, not the usual
   # mapping function pattern of taking a value and optionally a key
   mapKeys: mapKeys = (obj, f_val) ->
-    unless _.isPlainObject obj
+    unless isPlainObject obj
       throw new Error "mapKeys must be called on an object, not '#{obj}'"
     _.object _.map(obj, (v,k) -> f_val k,v), _.values obj
