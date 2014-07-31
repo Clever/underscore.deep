@@ -19,7 +19,6 @@ describe '_.deepMapValues', ->
     assert.deepEqual res, { a: { b: 2, c: 3 }, d: e: f: 4 }
 
   it "also passes keys", ->
-    obj = {}
     res = _.deepMapValues { a: { b: 1, c: 2 }, d: e: f: 3 }, (val, key) ->
       val = if 'a' in key then 0 else val
     assert.deepEqual res, { a: { b: 0, c: 0 }, d: e: f: 3 }
