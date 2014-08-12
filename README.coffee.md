@@ -181,21 +181,34 @@ If you think of a deeply-nested object as a tree, then it will return the paths 
 
 Takes an object and a list of dot-notation keys and returns a new object without those keys.
 
+      foods =
+        fruit:
+          apple: true
+          orange: true
+          carrot: true
+        vegetables:
+          banana: true
+
       describe '_.deepOmit', ->
 
-        obj =
-          fruit:
-            apple: true
-            orange: true
-            carrot: true
-          vegetables:
-            banana: true
-
         it 'returns an object without the given keys', ->
-          assert.deepEqual _.deepOmit(obj, ['fruit.carrot', 'vegetables']),
+          assert.deepEqual _.deepOmit(foods, ['fruit.carrot', 'vegetables']),
             fruit:
               apple: true
               orange: true
+
+### _.deepPick(obj, keys)
+
+Takes an object and a list of dot-notation keys and returns a new object with only those keys. If you pick a key that has a subobject below it, the entire subobject will be included, regardless of whether its subkeys are also picked.
+
+      describe '_.deepPick', ->
+
+        it 'returns an object with only the given keys', ->
+          assert.deepEqual _.deepPick(foods, ['fruit.carrot', 'vegetables']),
+            fruit:
+              carrot: true
+            vegetables:
+              banana: true
 
 ### _.deepExtend(destination, source, mutate = false)
 

@@ -66,6 +66,25 @@ module.exports =
       helper obj, key.split('.')
     _.reduce keys, deepOmitOne, obj
 
+  deepPick: do ->
+    deepGet = (obj, key) ->
+      helper = (obj, key_arr) ->
+        if key_arr.length is 1
+          obj[_.first key_arr]
+        else
+          helper obj[_.first key_arr], _.rest key_arr
+      helper obj, key.split('.')
+
+    (obj, keys) ->
+      unless isPlainObject obj
+        throw new Error "deepPick must be called on an object, not '#{obj}'"
+      flat_new_obj = _.reduce keys, (new_obj, key) ->
+        val = deepGet obj, key
+        new_obj[key] = val if val isnt undefined
+        new_obj
+      , {}
+      deepFromFlat flat_new_obj
+
   deepDelete: deepDelete = (obj, key) ->
     return if not key? or not obj?
     key = key.split '.' if not _(key).isArray()
@@ -104,7 +123,7 @@ module.exports =
     res
 
   # Takes an object with keys with dot.notation and deepens it into dot{notation:{}}
-  deepFromFlat: (o) ->
+  deepFromFlat: deepFromFlat = (o) ->
     oo = {}
     t = undefined
     parts = undefined
