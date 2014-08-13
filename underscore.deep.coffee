@@ -70,7 +70,7 @@ module.exports =
     deepGet = (obj, key) ->
       helper = (obj, key_arr) ->
         if key_arr.length is 1
-          obj[_.first key_arr]
+          obj?[_.first key_arr]
         else
           helper obj[_.first key_arr], _.rest key_arr
       helper obj, key.split('.')

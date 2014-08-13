@@ -25,6 +25,7 @@ describe '_.deepPick', ->
     [{ a: { b: 1 }},          ['a.b'],          { a: { b: 1 }}]
     [{ a: { b: 1 }},          ['a'],            { a: { b: 1 }}]
     [{ a: { b: 1 }},          ['a.b', 'a'],     { a: { b: 1 }}]
+    [{ a: 1 },                ['a.b.c'],        {}]
     [{ a: { b: 1, c: 'c' }},  ['a.c'],          { a: { c: 'c' }}]
     [{ a: { b: { c: null }}}, ['a.b'],          { a: { b: { c: null }}}]
     [{ long: { longer: {}}},  ['long.longer'],  { long: { longer: {}}}]
