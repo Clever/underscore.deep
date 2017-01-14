@@ -3,7 +3,7 @@
 Underscore.deep is a collection of Underscore mixins that operate on nested
 objects.
 
-This README is written in [Literate CoffeeScript](http://coffeescript.org/#literate) as a [Mocha](http://visionmedia.github.io/mocha/) test suite, so you can execute all of the examples - just run:
+This README is written in [Literate CoffeeScript](http://coffeescript.org/#literate) as a [Mocha](http://mochajs.org/) test suite, so you can execute all of the examples - just run:
 
 ```
 make README.coffee.md
