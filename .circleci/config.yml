@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/Clever/underscore.deep
     docker:
-    - image: circleci/node:8.11.3-stretch
+    - image: circleci/node:10-stretch
     environment:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
