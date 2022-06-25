@@ -22,6 +22,8 @@ module.exports =
     return object if not object?
 
     # normalizing primitives e.g. if someone did new String('aaa'), or new Number('444');
+    # boolean objects are very weird; explicitly case to force false values.
+    return new Boolean() if object instanceof Boolean && object.valueOf() == false
     return new type object for type in [Date, Number, String, Boolean] when object instanceof type
 
     # for arrays clone each element of it
