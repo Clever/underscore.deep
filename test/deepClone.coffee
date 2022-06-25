@@ -44,7 +44,7 @@ describe '_.deepClone', ->
   it "doesn't clone class intances", ->
       assert.strictEqual copy.structs.instance, orig.structs.instance
 
-  it.only "correcly copies truthy and falsy boolean objects", ->
+  it "correcly copies truthy and falsy boolean objects", ->
     bools =
       truthy_true: new Boolean(true)
       truthy_anything: new Boolean("anything")
