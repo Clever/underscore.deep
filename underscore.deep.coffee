@@ -136,6 +136,7 @@ module.exports =
       key = parts.pop()
       while parts.length
         part = parts.shift()
+        continue if part in ["__proto__", "constructor", "prototype"]
         t = t[part] = t[part] or {}
       t[key] = o[k]
     oo
