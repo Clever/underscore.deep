@@ -1,9 +1,13 @@
+# Notice
+
+This repo is not actively maintained by Clever. We currently do not have a drop-in replacement to recommend.
+
 # underscore.deep
 
 Underscore.deep is a collection of Underscore mixins that operate on nested
 objects.
 
-This README is written in [Literate CoffeeScript](http://coffeescript.org/#literate) as a [Mocha](http://visionmedia.github.io/mocha/) test suite, so you can execute all of the examples - just run:
+This README is written in [Literate CoffeeScript](https://coffeescript.org/#literate) as a [Mocha](https://mochajs.org/) test suite, so you can execute all of the examples - just run:
 
 ```
 make README.coffee.md
