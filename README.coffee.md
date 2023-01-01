@@ -321,3 +321,4 @@ Note that the function takes a function takes a key and optionally a value, not 
           assert.deepEqual _.mapKeys(obj, (key, val) -> 're' + key + val),
             reanimate1: 1
             recharge2: 2
+test
