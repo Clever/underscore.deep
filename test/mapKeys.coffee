@@ -1,6 +1,6 @@
 assert = require 'assert'
 _ = require('underscore')
-_.mixin require('../underscore.deep.js')
+_.mixin require('..')
 h = require './helpers'
 
 describe '_.mapKeys', ->

@@ -2,7 +2,14 @@
   "name": "underscore.deep",
   "version": "0.5.3",
   "description": "Underscore mixins for deeply nested objects",
-  "main": "underscore.deep.js",
+  "main": "./dist/cjs/underscore.deep.js",
+  "module": "./dist/esm/underscore.deep.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/underscore.deep.js",
+      "import": "./dist/esm/underscore.deep.js"
+    }
+  },
   "engines": {
     "node": ">=0.10.x"
   },
@@ -13,10 +20,21 @@
   },
   "license": "BSD",
   "peerDependencies": {
+    "lodash": "^4.17.21",
     "underscore": "1.x"
+  },
+  "peerDependenciesMeta": {
+    "underscore": {
+      "optional": true
+    },
+    "lodash": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "coffeescript": "1.x",
+    "lodash": "^4.17.21",
+    "mkdist": "^2.2.0",
     "mocha": "11.x",
     "underscore": "1.x"
   },
