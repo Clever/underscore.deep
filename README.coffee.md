@@ -22,6 +22,24 @@ npm install underscore.deep
 
 ## Usage
 
+Javascript (EcmaScript module):
+
+```js
+import _ from 'underscore';
+import underscoreDeep from 'underscore.deep';
+_.mixin(underscoreDeep);
+```
+
+Javascript (CommonJS module):
+
+```js
+const _ = require('underscore');
+const underscoreDeep = require('underscore.deep');
+_.mixin(underscoreDeep);
+```
+
+CoffeeScript:
+
 ```
 _ = require 'underscore'
 _.mixin require 'underscore.deep'
@@ -32,7 +50,7 @@ _.mixin require 'underscore.deep'
     describe 'underscore.deep', ->
       assert = require 'assert'
       _ = require 'underscore'
-      _.mixin require './underscore.deep'
+      _.mixin require 'underscore.deep'
 
 ### _.deepToFlat(obj)
 

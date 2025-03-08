@@ -1,6 +1,9 @@
-_ = require 'underscore'
+_ = null
 
-module.exports =
+exportObj =
+  initWithUnderscoreOrLodash: initWithUnderscoreOrLodash = (underscore) ->
+    if underscore
+      _ = underscore
 
   deepKeys: deepKeys = (obj) ->
     throw new Error "deepKeys must be called on an object, not '#{obj}'" unless isPlainObject obj
@@ -164,3 +167,5 @@ module.exports =
     unless isPlainObject obj
       throw new Error "mapKeys must be called on an object, not '#{obj}'"
     _.object _.map(obj, (v,k) -> f_val k,v), _.values obj
+
+export default exportObj

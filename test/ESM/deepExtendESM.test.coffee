@@ -1,7 +1,8 @@
-assert = require 'assert'
-{inspect} = require 'util'
-_ = require('underscore')
-_.mixin require('..')
+import assert from 'assert'
+import {inspect} from 'util'
+import _ from 'underscore'
+import underscoredeep from '../../dist/esm/underscore.deep.js'
+_.mixin(underscoredeep)
 
 describe 'deep_extend', ->
   test_obj =
