@@ -16,9 +16,9 @@
     "underscore": "1.x"
   },
   "devDependencies": {
-    "coffee-script": "~1.6.3",
-    "mocha": "^2.5.3",
-    "underscore": "~1.5.2"
+    "coffeescript": "1.x",
+    "mocha": "11.x",
+    "underscore": "1.x"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
